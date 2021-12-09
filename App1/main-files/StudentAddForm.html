@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <script>
+        function validateForm(form) {
+            var rollNumber=form.rollNumber.value.trim();
+            if(rollNumber.length==0) {
+                alert('Roll Number Required');
+                form.rollNumber.focus();
+                return false;
+            }
+            rollNumber=parseInt(rollNumber);
+            if(isNaN(rollNumber)) {
+                alert('Roll Number must be integer');
+                form.rollNumber.value='';
+                form.rollNumber.focus();
+                return false;
+            }
+            if(rollNumber<=0) {
+                alert('Roll Number must be non-zero');
+                form.rollNumber.value='';
+                form.rollNumber.focus();
+                return false;
+            }
+            var name=form.name.value.trim();
+            if(name.length==0) {
+                alert('Name Required');
+                form.name.focus();
+                return false;
+            }
+            var allow='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. ';
+            var i=0;
+            while(i<name.length) {
+                if(allow.indexOf(name.charAt(i))==-1) {
+                    alert('Invalid characters in name');
+                    form.name.focus();
+                    return false;
+                }
+                i++;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Student (Add Module)</h1>
+    <form action='/addStudent' method='get' onsubmit='return validateForm(this)'>
+        <div>
+            RollNumber: <input type='text' name='rollNumber' id='rollNumber'>
+        </div>
+        <div>
+            Name: <input type='text' name='name' id='name'>
+        </div>
+        <div>
+            Gender: &nbsp;&nbsp;&nbsp;Male<input type='radio' name='gender' id='male' value='M' checked> Female <input type='radio' name='gender' id='female' value='F'>
+        </div>
+        <div>
+            <button type='submit'>Add</button>
+        </div>
+    </form>
+    <br>
+    <a href='/'>Home</a>
+</body>
+</html>
